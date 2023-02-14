@@ -166,7 +166,7 @@ std::istream & operator>>(std::istream &is, Suit &suit) {
     {
       return true;
     }
-    else if (suit == is_left_bower(trump)) 
+    else if (is_left_bower(trump)) 
     {
       return true;
     }

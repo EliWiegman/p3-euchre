@@ -1,0 +1,56 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "(lldb) Pack Tests",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/Pack_tests.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "lldb"
+        },        
+        {
+            "name": "(lldb) Card Tests",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/Card_tests.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "lldb"
+        },        
+        {
+            "name": "(lldb) Card Public Tests",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/Card_public_test.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "lldb"
+        },
+        {
+            "name": "(lldb) Pack Public Tests",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/Pack_public_test.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "lldb"
+        },
+    ]
+}
