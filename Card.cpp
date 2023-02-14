@@ -99,3 +99,108 @@ std::istream & operator>>(std::istream &is, Suit &suit) {
 //   operator>=
 //   operator==
 //   operator!=
+
+
+  Card::Card()
+  {
+    assert(false);
+  }
+
+  Card::Card(Rank rank_in, Suit suit_in)
+  {
+    assert(false);
+  }
+
+  Rank Card::get_rank() const
+  {
+    assert(false);
+  }
+
+  Suit Card::get_suit() const
+  {
+    assert(false);
+  }
+
+  Suit Card::get_suit(Suit trump) const
+  {
+    assert(false);
+  }
+
+  bool Card::is_face_or_ace() const
+  {
+    assert(false);
+  }
+
+  bool Card::is_right_bower(Suit trump) const
+  {
+    assert(false);
+  }
+
+  bool Card::is_left_bower(Suit trump) const
+  {
+    assert(false);
+  }
+
+  bool Card::is_trump(Suit trump) const
+  {
+    assert(false);
+  }
+
+
+std::ostream & operator<<(std::ostream &os, const Card &card)
+{
+  assert(false);
+}
+
+std::istream & operator>>(std::istream &is, Card &card)
+{
+  assert(false);
+}
+
+bool operator<(const Card &lhs, const Card &rhs)
+{
+  assert(false);
+}
+
+bool operator<=(const Card &lhs, const Card &rhs)
+{
+  assert(false);
+}
+
+bool operator>(const Card &lhs, const Card &rhs)
+{
+  assert(false);
+}
+
+bool operator>=(const Card &lhs, const Card &rhs)
+{
+  assert(false);
+}
+
+bool operator==(const Card &lhs, const Card &rhs)
+{
+  assert(false);
+}
+
+bool operator!=(const Card &lhs, const Card &rhs)
+{
+  assert(false);
+}
+
+Suit Suit_next(Suit suit)
+{
+  assert(false);
+}
+
+bool Card_less(const Card &a, const Card &b, Suit trump)
+{
+  assert(false);
+}
+
+bool Card_less(const Card &a, const Card &b, const Card &led_card, Suit trump)
+{
+  assert(false);
+}
+
+
+
