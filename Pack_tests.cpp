@@ -16,4 +16,4 @@ TEST(test_pack_default_ctor) {
 
 // Add more tests here
 
-TEST_MAIN()
+TEST()

@@ -134,8 +134,8 @@ std::istream & operator>>(std::istream &is, Suit &suit) {
 
   bool Card::is_face_or_ace() const
   {
-    if (suit == JACK || suit == QUEEN || suit == KING ||
-    suit == ACE)
+    if (rank == JACK || rank == QUEEN || rank == KING ||
+    rank == ACE)
     {
       return true;
     }
@@ -180,6 +180,7 @@ std::istream & operator>>(std::istream &is, Suit &suit) {
 std::ostream & operator<<(std::ostream &os, const Card &card)
 {
   os << card.get_rank() << " of " << card.get_suit();
+  return os;
 }
 
 std::istream & operator>>(std::istream &is, Card &card)
@@ -189,6 +190,7 @@ std::istream & operator>>(std::istream &is, Card &card)
   string suit;
   is >> rank >> holder >> suit;
   card = Card(string_to_rank(rank), string_to_suit(suit));
+  return is;
 }
 
 bool operator<(const Card &lhs, const Card &rhs)
