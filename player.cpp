@@ -9,7 +9,9 @@ std::ostream & operator<<(std::ostream &os, const Player &p) {
 
 class SimplePlayer : public Player {
     public:
-        
+        SimplePlayer(string n) {
+            assert(false);
+        }
 
         const string & get_name() const {
             assert(false);
@@ -36,13 +38,41 @@ class SimplePlayer : public Player {
             assert(false);
         }
     private:
+        string name;
 };
 
 class HumanPlayer : public Player {
-    private:
-
     public:
+        HumanPlayer(string n) {
+            assert(false);
+        }
 
+        const string & get_name() const {
+            assert(false);
+        }
+
+        void add_card(const Card &c) {
+            assert(false);
+        }
+
+        bool make_trump(const Card &upcard, bool is_dealer,
+                        int round, Suit &order_up_suit) const {
+            assert(false);
+        }
+
+        void add_and_discard(const Card &upcard) {
+            assert(false);
+        }
+
+        Card lead_card(Suit trump) {
+            assert(false);
+        }
+
+        Card play_card(const Card &led_card, Suit trump) {
+            assert(false);
+        }
+    private:
+        string name;
 };
 
 Player * Player_factory(const std::string &name, 
