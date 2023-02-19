@@ -1,5 +1,6 @@
 // Project UID 1d9f47bfc76643019cfbf037641defe1
 #include "Player.h"
+#include "Pack.h"
 
 using namespace std;
 
@@ -10,20 +11,67 @@ std::ostream & operator<<(std::ostream &os, const Player &p) {
 class SimplePlayer : public Player {
     public:
         SimplePlayer(string n) {
-            assert(false);
+            name = n;
         }
 
         const string & get_name() const {
-            assert(false);
+            return name;
         }
 
         void add_card(const Card &c) {
-            assert(false);
+            hand.push_back(c);
         }
 
         bool make_trump(const Card &upcard, bool is_dealer,
                         int round, Suit &order_up_suit) const {
-            assert(false);
+            
+            switch (round) {
+                case 1:
+                    const Suit upcard_suit = upcard.get_suit();
+                    int trump_cards = 0;
+
+                    /* order up if that would mean they have two or more 
+                    cards that are face or ace cards of the trump suit */
+                    for (int i = 0; i < MAX_HAND_SIZE; i++) {
+                       if (hand.at(i).is_face_or_ace() 
+                           && hand.at(i).is_trump(upcard_suit)) {
+                            trump_cards++;
+                       }
+                    };
+
+                    if (trump_cards >= 2) {
+                        order_up_suit = upcard_suit;
+                        return true;
+                    }
+                    
+                    return false;
+
+                case 2:
+                    const Suit next_suit = Suit_next(upcard.get_suit());
+                    int trump_cards = 0;
+
+                    if (is_dealer) {
+                        order_up_suit = next_suit;
+                        return true;
+                    }
+
+                    /* order up if that would mean they have two or more 
+                    cards that are face or ace cards of the trump suit */
+                    for (int i = 0; i < MAX_HAND_SIZE; i++) {
+                       if (hand.at(i).is_face_or_ace() 
+                           && hand.at(i).is_trump(next_suit)) {
+                            trump_cards++;
+                       }
+                    };
+
+                    if (trump_cards >= 1) {
+                        order_up_suit = next_suit;
+                        return true;
+                    }
+
+                default:
+                    break;
+            }
         }
 
         void add_and_discard(const Card &upcard) {
@@ -39,16 +87,17 @@ class SimplePlayer : public Player {
         }
     private:
         string name;
+        vector<Card> hand;
 };
 
 class HumanPlayer : public Player {
     public:
         HumanPlayer(string n) {
-            assert(false);
+            name = n;
         }
 
         const string & get_name() const {
-            assert(false);
+            return name;
         }
 
         void add_card(const Card &c) {
