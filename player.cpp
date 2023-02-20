@@ -75,13 +75,44 @@ class SimplePlayer : public Player {
         }
 
         void add_and_discard(const Card &upcard) {
-            assert(false);
+            hand.push_back(upcard);
+
         }
 
-        Card lead_card(Suit trump) {
-            assert(false);
+        Card lead_card(Suit trump) 
+        {
+            Card max = hand[0];
+            int counter = 1;
+            while (max.get_suit() == trump || counter < hand.size())
+            {
+                max = hand[counter];
+                counter++;
+            }
+            if (counter == hand.size() + 1)
+            {
+                for (int i = 1; i < hand.size(); i++)
+                {
+                    if (hand[i] > max)
+                    {
+                        max = hand[i + 1];
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 1; i < hand.size(); i++)
+                {
+                    if (hand[i] > max)
+                    {
+                        if (hand[i].get_suit() != trump)
+                        {
+                            max = hand[i + 1];
+                        }
+                    }
+                }
+            }
         }
-
+        
         Card play_card(const Card &led_card, Suit trump) {
             assert(false);
         }
