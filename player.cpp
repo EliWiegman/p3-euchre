@@ -24,59 +24,70 @@ class SimplePlayer : public Player {
 
         bool make_trump(const Card &upcard, bool is_dealer,
                         int round, Suit &order_up_suit) const {
-            
-            switch (round) {
-                case 1:
-                    const Suit upcard_suit = upcard.get_suit();
-                    int trump_cards = 0;
+            int trump_cards;
+            Suit upcard_suit;
+            Suit next_suit;
 
-                    /* order up if that would mean they have two or more 
-                    cards that are face or ace cards of the trump suit */
-                    for (int i = 0; i < MAX_HAND_SIZE; i++) {
-                       if (hand.at(i).is_face_or_ace() 
-                           && hand.at(i).is_trump(upcard_suit)) {
-                            trump_cards++;
-                       }
-                    };
+            if (round == 1) {
+                upcard_suit = upcard.get_suit();
+                trump_cards = 0;
 
-                    if (trump_cards >= 2) {
-                        order_up_suit = upcard_suit;
-                        return true;
+                /* order up if that would mean they have two or more 
+                cards that are face or ace cards of the trump suit */
+                for (int i = 0; i < MAX_HAND_SIZE; i++) {
+                    if (hand.at(i).is_face_or_ace() 
+                        && hand.at(i).is_trump(upcard_suit)) {
+                        trump_cards++;
                     }
-                    
-                    return false;
+                };
 
-                case 2:
-                    const Suit next_suit = Suit_next(upcard.get_suit());
-                    int trump_cards = 0;
+                if (trump_cards >= 2) {
+                    order_up_suit = upcard_suit;
+                    return true;
+                }
+                
+                return false;
+            } else if (round == 2) {
+                next_suit = Suit_next(upcard.get_suit());
+                trump_cards = 0;
 
-                    if (is_dealer) {
-                        order_up_suit = next_suit;
-                        return true;
+                if (is_dealer) {
+                    order_up_suit = next_suit;
+                    return true;
+                }
+
+                /* order up if that would mean they have two or more 
+                cards that are face or ace cards of the trump suit */
+                for (int i = 0; i < MAX_HAND_SIZE; i++) {
+                    if (hand.at(i).is_face_or_ace() 
+                        && hand.at(i).is_trump(next_suit)) {
+                        trump_cards++;
                     }
+                };
 
-                    /* order up if that would mean they have two or more 
-                    cards that are face or ace cards of the trump suit */
-                    for (int i = 0; i < MAX_HAND_SIZE; i++) {
-                       if (hand.at(i).is_face_or_ace() 
-                           && hand.at(i).is_trump(next_suit)) {
-                            trump_cards++;
-                       }
-                    };
+                if (trump_cards >= 1) {
+                    order_up_suit = next_suit;
+                    return true;
+                }
 
-                    if (trump_cards >= 1) {
-                        order_up_suit = next_suit;
-                        return true;
-                    }
-
-                default:
-                    break;
+                return false;
+            } else {
+                return false;
             }
         }
 
         void add_and_discard(const Card &upcard) {
             hand.push_back(upcard);
+            Card min = hand[0];
+            int min_index = 0;
+            for (int i = 1; i <= MAX_HAND_SIZE; i++) {
+                if (Card_less(hand[i], min, upcard.get_suit())) {
+                    min = hand[i];
+                    min_index = i;
+                }
+            }
 
+            hand.erase(hand.begin() + min_index);
         }
 
         Card lead_card(Suit trump) 
@@ -88,6 +99,7 @@ class SimplePlayer : public Player {
                 max = hand[counter];
                 counter++;
             }
+
             if (counter == hand.size() + 1)
             {
                 for (int i = 1; i < hand.size(); i++)
@@ -98,6 +110,7 @@ class SimplePlayer : public Player {
                     }
                 }
             }
+
             else
             {
                 for (int i = 1; i < hand.size(); i++)
@@ -111,11 +124,15 @@ class SimplePlayer : public Player {
                     }
                 }
             }
+
+            // wrote this to get it to compile
+            return max;
         }
         
         Card play_card(const Card &led_card, Suit trump) {
             assert(false);
         }
+
     private:
         string name;
         vector<Card> hand;

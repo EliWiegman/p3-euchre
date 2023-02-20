@@ -52,5 +52,29 @@
             "externalConsole": false,
             "MIMode": "lldb"
         },
+        {
+            "name": "(lldb) Pack Public Tests",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/Player_public_test.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "lldb"
+        },
+        {
+            "name": "(lldb) Pack Public Tests",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/Player_tests.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "lldb"
+        },
     ]
 }
