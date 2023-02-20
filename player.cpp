@@ -124,13 +124,45 @@ class SimplePlayer : public Player {
                     }
                 }
             }
-
             // wrote this to get it to compile
             return max;
         }
         
         Card play_card(const Card &led_card, Suit trump) {
-            assert(false);
+            int suitCounter = 0;
+            Card min = hand[0];
+            Card max = hand[0];
+            for (int i = 0; i < hand.size(); i++)
+            {
+                if (hand[i].get_suit() == led_card.get_suit())
+                {
+                    suitCounter++;
+                }
+            }
+            if (suitCounter == 0)
+            {
+                for (int j = 1; j < hand.size();  j++)
+                {
+                    if (Card_less(hand[j], min, trump))
+                    {
+                        min = hand[j];
+                    }
+                }
+                return min;
+            }
+            else
+            {
+                for (int j = 1; j < hand.size();  j++)
+                {
+                    if (Card_less(max, hand[j], trump))
+                    {
+                        if (hand[j].get_suit() == led_card.get_suit())
+                        {
+                            max = hand[j];
+                        }
+                    }
+                }
+            }
         }
 
     private:
