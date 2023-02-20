@@ -4,5 +4,8 @@
         "warning",
         "info",
         "hint"
-    ]
+    ],
+    "files.associations": {
+        "vector": "cpp"
+    }
 }
