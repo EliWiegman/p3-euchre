@@ -2,9 +2,11 @@
 
 #include <iostream>
 #include <fstream>
-#include <Pack.h>
-#include <Player.h>
+#include "Pack.h"
+#include "Player.h"
 using namespace std;
+
+void print_warning();
 
 class Game {
  public:
@@ -24,20 +26,13 @@ class Game {
 };
 
 int main(int argc, char* argv[]) {
-    if (argc != 12) {
-        print_warning();
-        return -1;
-    }
-
     string filename = argv[1];
-
     ifstream input;
     input.open(filename);
     if(!input.is_open()) {
-        cout << "Error opening file: " << filename << endl;
-        return 1;
+        cout << "Error opening " << filename << endl;
+        return -1;
     }
-
 
     string shuffle = argv[2];
     if (!((shuffle == "shuffle") || (shuffle == "noshuffle"))) {
@@ -46,20 +41,40 @@ int main(int argc, char* argv[]) {
     };
 
     int points = atoi(argv[3]);
-    if ((points <= 100) && (points > 0)) {
+    if (!((points <= 100) && (points > 0))) {
         print_warning();
         return -1;
     }
 
     string p0_name = argv[4];
     string p0_strat = argv[5];
+    if (!((p0_strat == "Simple") || (p0_strat == "Human"))) {
+        print_warning();
+        return -1;
+    };
+
     string p1_name = argv[6];
     string p1_strat = argv[7];
+    if (!((p1_strat == "Simple") || (p1_strat == "Human"))) {
+        print_warning();
+        return -1;
+    };
+
     string p2_name = argv[8];
     string p2_strat = argv[9];
+    if (!((p2_strat == "Simple") || (p2_strat == "Human"))) {
+        print_warning();
+        return -1;
+    };
+
     string p3_name = argv[10];
     string p3_strat = argv[11];
+    if (!((p3_strat == "Simple") || (p3_strat == "Human"))) {
+        print_warning();
+        return -1;
+    };
 
+    return 0;
 }
 
 void print_warning() {

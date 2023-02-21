@@ -3,19 +3,7 @@
     // Hover to view descriptions of existing attributes.
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
-    "configurations": [
-        {
-            "name": "(lldb) Pack Tests",
-            "type": "cppdbg",
-            "request": "launch",
-            "program": "${workspaceFolder}/Pack_tests.exe",
-            "args": [],
-            "stopAtEntry": false,
-            "cwd": "${fileDirname}",
-            "environment": [],
-            "externalConsole": false,
-            "MIMode": "lldb"
-        },        
+    "configurations": [            
         {
             "name": "(lldb) Card Tests",
             "type": "cppdbg",
@@ -27,7 +15,7 @@
             "environment": [],
             "externalConsole": false,
             "MIMode": "lldb"
-        },        
+        },
         {
             "name": "(lldb) Card Public Tests",
             "type": "cppdbg",
@@ -41,6 +29,18 @@
             "MIMode": "lldb"
         },
         {
+            "name": "(lldb) Pack Tests",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/Pack_tests.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "lldb"
+        },        
+        {
             "name": "(lldb) Pack Public Tests",
             "type": "cppdbg",
             "request": "launch",
@@ -53,7 +53,19 @@
             "MIMode": "lldb"
         },
         {
-            "name": "(lldb) Pack Public Tests",
+            "name": "(lldb) Player Tests",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/Player_tests.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "lldb"
+        },
+        {
+            "name": "(lldb) Player Public Tests",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/Player_public_test.exe",
@@ -65,16 +77,16 @@
             "MIMode": "lldb"
         },
         {
-            "name": "(lldb) Pack Public Tests",
+            "name": "(lldb) Euchre",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/Player_tests.exe",
-            "args": [],
+            "program": "${workspaceFolder}/euchre.exe",
+            "args": ["pack.in", "noshuffle", "1", "Adi", "Simple", "Barbara", "Simple", "Chi-Chih", "Simple", "Dabbala", "Simple"],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
             "environment": [],
             "externalConsole": false,
-            "MIMode": "lldb"
+            "MIMode": "lldb",
         },
     ]
 }

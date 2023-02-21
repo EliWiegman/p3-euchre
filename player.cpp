@@ -163,6 +163,9 @@ class SimplePlayer : public Player {
                     }
                 }
             }
+
+            // PUT HERE FOR COMPILE
+            return min;
         }
 
     private:
