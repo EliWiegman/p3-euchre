@@ -128,6 +128,7 @@ class SimplePlayer : public Player {
             return max;
         }
         
+        // Possibly may not check a case where the first card is the highest card on suit of led card
         Card play_card(const Card &led_card, Suit trump) {
             int suitCounter = 0;
             Card min = hand[0];
@@ -163,9 +164,6 @@ class SimplePlayer : public Player {
                     }
                 }
             }
-
-            // PUT HERE FOR COMPILE
-            return min;
         }
 
     private:
@@ -184,12 +182,44 @@ class HumanPlayer : public Player {
         }
 
         void add_card(const Card &c) {
-            assert(false);
+            hand.push_back(c);
+            std::sort(hand.begin(), hand.end());
         }
 
         bool make_trump(const Card &upcard, bool is_dealer,
                         int round, Suit &order_up_suit) const {
-            assert(false);
+            string choice;
+            print_hand();
+            cout << "Human player " << name << ", please enter a suit, or \"pass\":\n";
+
+            cin >> choice;
+            if (choice != "pass")
+            {
+                if (choice == "Clubs") 
+                {
+                    order_up_suit = CLUBS;
+                    return true;
+                }
+                else if (choice == "Diamonds") 
+                {
+                    order_up_suit = DIAMONDS;
+                    return true;
+                }
+                else if (choice == "Hearts") 
+                {
+                    order_up_suit = HEARTS;
+                    return true;
+                }
+                else
+                {
+                    order_up_suit = CLUBS;
+                    return true;                    
+                }
+            } 
+            else
+            {
+                return false;
+            }
         }
 
         void add_and_discard(const Card &upcard) {
@@ -197,7 +227,7 @@ class HumanPlayer : public Player {
         }
 
         Card lead_card(Suit trump) {
-            assert(false);
+            
         }
 
         Card play_card(const Card &led_card, Suit trump) {
@@ -205,6 +235,13 @@ class HumanPlayer : public Player {
         }
     private:
         string name;
+        vector<Card> hand;
+
+        void print_hand() const {
+  for (size_t i=0; i < hand.size(); ++i)
+    cout << "Human player " << name << "'s hand: "
+         << "[" << i << "] " << hand[i] << "\n";
+}
 };
 
 Player * Player_factory(const std::string &name, 
