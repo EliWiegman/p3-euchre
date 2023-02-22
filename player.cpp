@@ -151,19 +151,17 @@ class SimplePlayer : public Player {
                 }
                 return min;
             }
-            else
+            for (int j = 1; j < hand.size();  j++)
             {
-                for (int j = 1; j < hand.size();  j++)
+                if (Card_less(max, hand[j], trump))
                 {
-                    if (Card_less(max, hand[j], trump))
+                    if (hand[j].get_suit() == led_card.get_suit())
                     {
-                        if (hand[j].get_suit() == led_card.get_suit())
-                        {
-                            max = hand[j];
-                        }
+                        max = hand[j];
                     }
                 }
             }
+            return max;
         }
 
     private:
@@ -270,7 +268,7 @@ Player * Player_factory(const std::string &name,
   if (strategy == "Simple") {
     return new SimplePlayer(name);
   } else if (strategy == "Human") {
-    // return new HumanPlayer(name);
+    return new HumanPlayer(name);
   }
 
   // Invalid strategy if we get here

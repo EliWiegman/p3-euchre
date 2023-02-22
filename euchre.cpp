@@ -25,18 +25,22 @@ class Game {
             players.push_back(Player_factory(p2_name, p2_strat));
             players.push_back(Player_factory(p3_name, p3_strat));
 
-            point_vector = vector<int>(4, 0);
-
+            t1_points = 0;
+            t2_points = 0;
         };
 
         void play() {
-            
+            Player* dealer = players[0];
+            int set = 0;
+            while (play_hand(set, dealer)) {
+                set++;
+                dealer = player_sitting(dealer, 1);
+            }
         };
 
     private:
         vector<Player*> players;
-        vector<int> point_vector;
-        int points_to_win;
+        int points_to_win, t1_points, t2_points;
         Suit trump;
         Pack pack;
         Card upcard;
@@ -98,30 +102,29 @@ class Game {
 
         };
 
-        Card make_trump(Player* dealer, Card* upcard) {
+        Player* make_trump(Player* dealer, Card* upcard) {
             int pos;
             for (int turn = 0; turn < 8; turn++) {
                 pos = player_order(dealer, turn);
                 if (players[pos]->make_trump(*upcard, ((pos % 4) == 0), (turn / 4), trump)) {
                     cout << players[pos]->get_name() << " orders up " << trump << endl;
                     dealer->add_and_discard(*upcard);
-                    return *upcard;
-                } else {
-                    cout << players[pos]->get_name() << " passes" << endl;
+                    return players[pos];
                 }
-
-            }   
+                cout << players[pos]->get_name() << " passes" << endl;
+            }
+            return dealer;   
         };
 
-        void play_hand(int set, Player* dealer) {
+        int play_hand(int set, Player* dealer) {
             pack.shuffle();
             deal(dealer);
-            cout << "Hand " << set << endl;
 
+            cout << "Hand " << set << endl;
             cout << dealer->get_name() <<" deals" << endl;
 
             upcard = pack.deal_one();
-            make_trump(dealer, &upcard);
+            Player* leader = make_trump(dealer, &upcard);
             cout << endl;
 
             Card leadCard, playedCard;
@@ -129,6 +132,9 @@ class Game {
             int seat;
             int next_seat = player_order(dealer, 1);
             
+            int t1_tricks = 0;
+            int t2_tricks = 0;
+
             for (int trick = 0; trick < 5; trick++) {
                 leadCard = players[next_seat]->lead_card(trump);
 
@@ -145,12 +151,90 @@ class Game {
                 }
 
                 cout << winner << " takes the trick" << endl << endl;
-
-                // TODO: points
+                switch (next_seat) {
+                    case 0: case 2:
+                        t1_tricks++;
+                    default:
+                        t2_tricks++;
+                }
+            }
+            
+            if (update_points(leader, t1_points, t2_points) == 1) {
+                return 1;
+            } else if (update_points(leader, t1_points, t2_points) == 2) {
+                return 2;
+            } else {
+                return 0;
             }
 
-
         };
+
+        int update_points(Player* ordered_up, int t1, int t2) {
+            switch (team(ordered_up)) {
+                case 1:
+                    switch(t1_points) {
+                        case 3: case 4:
+                            print_winners(1);
+                            t1_points += 1;
+                            break;
+                        case 5:
+                            print_winners(1);
+                            t1_points += 2;
+                            cout << "march!" << endl;
+                            break;
+                        default:
+                            print_winners(2);
+                            cout << "euchred!" << endl;
+                            t2_points += 2;
+                    }
+                case 2:
+                    switch(t2_points) {
+                        case 3: case 4:
+                            print_winners(2);
+                            t2_points += 1;
+                            break;
+                        case 5:
+                            print_winners(2);
+                            t2_points += 2;
+                            cout << "march!" << endl;
+                            break;
+                        default:
+                            print_winners(1);
+                            t1_points += 2;
+                            cout << "euchred!" << endl;
+                    }
+            }
+
+            if (t1_points >= points_to_win) {
+                cout << players[0]->get_name() << " and " << players[2]->get_name() << "win!";
+                return 1;
+            } else if (t2_points >= points_to_win) {
+                cout << players[1]->get_name() << " and " << players[3]->get_name() << "win!";
+                return 2;
+            }
+
+            return 0;
+        }
+
+        void print_winners(int team) {
+            if (team == 1) {
+                cout << players[0]->get_name() << " and " << players[2]->get_name() << "win!";
+            } else {
+                cout << players[1]->get_name() << " and " << players[3]->get_name() << "win!";
+            }
+        }
+
+        int team(Player* player) {
+            for (int i = 0; i < 4; i++) {
+                switch (player_order(player, 0)) {
+                    case 0: case 2:
+                        return 1;
+                    default:
+                        return 2;
+                }
+            }
+            return 0;
+        }
 };
 
 
