@@ -271,43 +271,138 @@ bool Card_less(const Card &a, const Card &b, Suit trump)
 {
   if (a.get_suit() != trump && b.get_suit() == trump)
   {
-    return true;
-  }
-  if (a.get_suit() == trump && b.get_suit() == trump)
-  {
-    if (a.get_rank() < b.get_rank())
+    if (a.is_left_bower(trump) == false)
     {
       return true;
     }
+    else
+    {
+      if (b.get_suit() == trump && b.get_rank() == JACK)
+      {
+        return true;
+      }
+      else
+      {
+        return false;
+      }
+
+    }
   }
-  return false;
+  else if (a.get_suit() == trump && b.get_suit() != trump)
+  {
+    if (b.is_left_bower(trump))
+    {
+      if (a.get_suit() == trump && a.get_rank() == JACK)
+      {
+        return false;
+      }
+      else
+      {
+        return true;
+      }
+    }
+    else 
+    {
+      return false;
+    }
+  }
+  else 
+  {
+    if (b.get_rank() > a.get_rank())
+    {
+      return true;
+    }
+    else if (b.get_rank() == a.get_rank())
+    {
+      if (b.get_suit() > a.get_suit())
+      {
+        return true;
+      }
+      else
+      {
+        return false;
+      }
+    }
+    else
+    {
+      return false;
+    }
+  }
+
 }
 
 bool Card_less(const Card &a, const Card &b, const Card &led_card, Suit trump)
 {
   if (a.get_suit() != trump && b.get_suit() == trump)
   {
-    return true;
-  }
-  if (a.get_suit() == trump && b.get_suit() == trump)
-  {
-    if (a.get_rank() < b.get_rank())
+    if (a.is_left_bower(trump) == false)
     {
       return true;
     }
+    else
+    {
+      if (b.get_suit() == trump && b.get_rank() == JACK)
+      {
+        return true;
+      }
+      else
+      {
+        return false;
+      }
+
+    }
   }
-  if (a.get_suit() != led_card.get_suit() && b.get_suit() == led_card.get_suit())
+  else if (a.get_suit() == trump && b.get_suit() != trump)
   {
-    return true;
+    if (b.is_left_bower(trump))
+    {
+      if (a.get_suit() == trump && a.get_rank() == JACK)
+      {
+        return false;
+      }
+      else
+      {
+        return true;
+      }
+    }
+    else 
+    {
+      return false;
+    }
   }
-  if (a.get_suit() == led_card.get_suit() && b.get_suit() == led_card.get_suit())
+  else 
   {
-    if (a.get_rank() < b.get_rank())
+    if (a.get_suit() != led_card.get_suit() && b.get_suit() == led_card.get_suit())
     {
       return true;
     }
+    else if (a.get_suit() == led_card.get_suit() && b.get_suit() != led_card.get_suit())
+    {
+      return false;
+    }
+    else 
+    {
+      if (b.get_rank() > a.get_rank())
+    {
+      return true;
+    }
+    else if (b.get_rank() == a.get_rank())
+    {
+      if (b.get_suit() > a.get_suit())
+      {
+        return true;
+      }
+      else
+      {
+        return false;
+      }
+    }
+    else
+    {
+      return false;
+    }
   }
-  return false;
+  }
 }
 
 

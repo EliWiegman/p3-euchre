@@ -25,7 +25,7 @@ TEST(test_card_suit_rank)
     Card jack_spades = Card(JACK, SPADES);
     ASSERT_EQUAL(JACK, jack_spades.get_rank());
     ASSERT_EQUAL(SPADES, jack_spades.get_suit());
-    ASSERT_NOT_EQUAL(DIAMONDS, jack_spades.get_suit(HEARTS));
+    ASSERT_NOT_EQUAL(DIAMONDS, jack_spades.get_suit());
 }
 
 TEST(test_card_props)
