@@ -223,15 +223,35 @@ class HumanPlayer : public Player {
         }
 
         void add_and_discard(const Card &upcard) {
-            assert(false);
+            string choice;
+            hand.push_back(upcard);
+            print_hand();
+            cout << "Discard upcard: [-1]\n";
+            cout << "Human player " << name << ", please select a card to discard:\n";
+            if (choice == "-1")
+            {
+                hand.erase(hand.begin() + hand.size() - 1);
+            }
+            else
+            {
+                hand.erase(hand.begin() + stoi(choice));
+            }
         }
 
         Card lead_card(Suit trump) {
-            
+            print_hand();
+            cout << "Human player " << name << ", please select a card:\n";
+            string choice;
+            cin >> choice;
+            return hand[stoi(choice)];
         }
 
         Card play_card(const Card &led_card, Suit trump) {
-            assert(false);
+            print_hand();
+            cout << "Human player " << name << ", please select a card:\n";
+            string choice;
+            cin >> choice;
+            return hand[stoi(choice)];
         }
     private:
         string name;
