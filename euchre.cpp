@@ -1,6 +1,7 @@
 // Project UID 1d9f47bfc76643019cfbf037641defe1
 
 #include <iostream>
+#include <vector>
 #include <fstream>
 #include "Pack.h"
 #include "Player.h"
@@ -15,6 +16,16 @@ class Game {
         string p1_name, string p1_strat,
         string p2_name, string p2_strat,
         string p3_name, string p3_strat ) {
+            pack = Pack(is);
+            shuffled = shuffleDeck;
+            points_to_win = points;
+
+            players.push_back(Player_factory(p0_name, p0_strat));
+            players.push_back(Player_factory(p1_name, p1_strat));
+            players.push_back(Player_factory(p2_name, p2_strat));
+            players.push_back(Player_factory(p3_name, p3_strat));
+
+            point_vector = vector<int>(4, 0);
 
         };
 
@@ -23,22 +34,41 @@ class Game {
         };
 
     private:
-        std::vector<Player*> players;
+        vector<Player*> players;
+        vector<int> point_vector;
+        int points_to_win;
         Suit trump;
         Pack pack;
+        Card upcard;
         bool shuffled = false;
 
-        int player_order(Player* dealer, int distance) {
+        int player_order(Player* player, int distance) {
             int position;
 
             for (int i = 0; i < 4; i++) {
-                if (players[i] == dealer) {
+                if (players[i] == player) {
                     position = i;
                 }
             }
 
             return (position + distance) % 4;
         };
+
+        Player* player_sitting(Player* player, int distance) {
+            int position;
+
+            for (int i = 0; i < 4; i++) {
+                if (players[i] == player) {
+                    position = i;
+                }
+            }
+
+            return players[(position + distance) % 4];
+        };
+
+        Player* partner(Player* player) {
+            return player_sitting(player, 2);
+        }
 
         void shuffle() {
             if (shuffled) {
@@ -48,7 +78,7 @@ class Game {
             }
         };
 
-        void deal(Player* dealer, int position) {
+        void deal(Player* dealer) {
             int pos;
 
             for (int batch = 0; batch < 8; batch++) {
@@ -68,22 +98,57 @@ class Game {
 
         };
 
-        void make_trump(Player* dealer) {
-            const Card upcard = pack.deal_one();
+        Card make_trump(Player* dealer, Card* upcard) {
             int pos;
-            for (int turn = 0; turn < 4; turn++) {
+            for (int turn = 0; turn < 8; turn++) {
                 pos = player_order(dealer, turn);
-                if (players[pos]->make_trump(upcard, ((pos % 4) == 0), 1, trump)) {
-                    break;
+                if (players[pos]->make_trump(*upcard, ((pos % 4) == 0), (turn / 4), trump)) {
+                    cout << players[pos]->get_name() << " orders up " << trump << endl;
+                    dealer->add_and_discard(*upcard);
+                    return *upcard;
+                } else {
+                    cout << players[pos]->get_name() << " passes" << endl;
                 }
-            }
 
-            if () {
-
-            };       
+            }   
         };
 
-        void play_hand() {
+        void play_hand(int set, Player* dealer) {
+            pack.shuffle();
+            deal(dealer);
+            cout << "Hand " << set << endl;
+
+            cout << dealer->get_name() <<" deals" << endl;
+
+            upcard = pack.deal_one();
+            make_trump(dealer, &upcard);
+            cout << endl;
+
+            Card leadCard, playedCard;
+            string winner;
+            int seat;
+            int next_seat = player_order(dealer, 1);
+            
+            for (int trick = 0; trick < 5; trick++) {
+                leadCard = players[next_seat]->lead_card(trump);
+
+                for (int player = 1; player < 4; player++) {
+                    seat = player_order(dealer, player);
+                    playedCard = players[seat]->
+                                 play_card(leadCard, trump);
+
+                    if (Card_less(leadCard, playedCard, trump)) {
+                        leadCard = playedCard;
+                        winner = players[seat]->get_name();
+                        next_seat = seat;
+                    }
+                }
+
+                cout << winner << " takes the trick" << endl << endl;
+
+                // TODO: points
+            }
+
 
         };
 };

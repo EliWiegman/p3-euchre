@@ -258,10 +258,11 @@ class HumanPlayer : public Player {
         vector<Card> hand;
 
         void print_hand() const {
-  for (size_t i=0; i < hand.size(); ++i)
-    cout << "Human player " << name << "'s hand: "
-         << "[" << i << "] " << hand[i] << "\n";
-}
+            for (size_t i=0; i < hand.size(); ++i) {
+                cout << "Human player " << name << "'s hand: "
+                    << "[" << i << "] " << hand[i] << "\n";
+            }
+        }
 };
 
 Player * Player_factory(const std::string &name, 
