@@ -175,6 +175,7 @@ class SimplePlayer : public Player {
         vector<Card> hand;
 };
 
+
 class HumanPlayer : public Player {
     public:
         HumanPlayer(string n) {
