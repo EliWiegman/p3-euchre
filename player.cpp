@@ -160,6 +160,7 @@ class SimplePlayer : public Player {
                         max = hand[j];
                     }
                 }
+                return max;
             }
             return max;
         }
