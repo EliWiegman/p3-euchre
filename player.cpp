@@ -131,6 +131,8 @@ class SimplePlayer : public Player {
         // Possibly may not check a case where the first card is the highest card on suit of led card
         Card play_card(const Card &led_card, Suit trump) {
             int suitCounter = 0;
+            int minIndex = 0;
+            int maxIndex = 0;
             Card min = hand[0];
             Card max = hand[0];
             for (int i = 0; i < hand.size(); i++)
@@ -147,8 +149,10 @@ class SimplePlayer : public Player {
                     if (Card_less(hand[j], min, trump))
                     {
                         min = hand[j];
+                        minIndex = j;
                     }
                 }
+                hand.erase(hand.begin() + minIndex);
                 return min;
             }
             for (int j = 1; j < hand.size();  j++)
@@ -158,10 +162,11 @@ class SimplePlayer : public Player {
                     if (hand[j].get_suit() == led_card.get_suit())
                     {
                         max = hand[j];
+                        maxIndex = j;
                     }
                 }
-                return max;
             }
+            hand.erase(hand.begin() + maxIndex);
             return max;
         }
 
