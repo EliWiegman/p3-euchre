@@ -94,7 +94,7 @@ class SimplePlayer : public Player {
         {
             Card max = hand[0];
             int counter = 1;
-            while (max.get_suit() == trump || counter < hand.size())
+            while ((max.get_suit() == trump) && (counter < hand.size()))
             {
                 max = hand[counter];
                 counter++;
@@ -104,9 +104,9 @@ class SimplePlayer : public Player {
             {
                 for (int i = 1; i < hand.size(); i++)
                 {
-                    if (hand[i] > max)
+                    if (Card_less(max, hand[i], trump))
                     {
-                        max = hand[i + 1];
+                        max = hand[i];
                     }
                 }
             }
@@ -115,11 +115,11 @@ class SimplePlayer : public Player {
             {
                 for (int i = 1; i < hand.size(); i++)
                 {
-                    if (hand[i] > max)
+                    if (Card_less(max, hand[i], trump))
                     {
                         if (hand[i].get_suit() != trump)
                         {
-                            max = hand[i + 1];
+                            max = hand[i];
                         }
                     }
                 }
