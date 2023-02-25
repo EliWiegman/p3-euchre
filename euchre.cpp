@@ -32,7 +32,7 @@ class Game {
         void play() {
             Player* dealer = players[0];
             int set = 0;
-            while (play_hand(set, dealer)) {
+            while (play_hand(set, dealer) == 0) {
                 set++;
                 dealer = player_sitting(dealer, 1);
             }
@@ -118,7 +118,7 @@ class Game {
         };
 
         int play_hand(int set, Player* dealer) {
-            pack.shuffle();
+            shuffle();
             deal(dealer);
 
             cout << "Hand " << set << endl;
@@ -131,8 +131,7 @@ class Game {
             
             Card leadCard, playedCard, winningCard;
             string winner;
-            int seat;
-
+            int seat, first_seat;
             // start with person left to the dealer
             int next_seat = player_order(dealer, 1);
             
@@ -143,13 +142,14 @@ class Game {
             for (int trick = 0; trick < 5; trick++) {
                 
                 // call lead card on the next player, assigning their choice to leadCard
+                first_seat = next_seat;
                 leadCard = players[next_seat]->lead_card(trump);
                 cout << leadCard << " led by " << players[next_seat]->get_name() << endl; 
 
                 // for the 3 other people on the table
                 for (int player = 1; player < 4; player++) {
-                    // set seat to their current seat 
-                    seat = player_order(players[next_seat], player);
+                    seat = player_order(players[first_seat], player); 
+                    
                     // call play card on a player based on the lead card and the trump suit
                     playedCard = players[seat]->
                                  play_card(leadCard, trump);
@@ -159,6 +159,7 @@ class Game {
                     if (Card_less(winningCard, playedCard, trump)) {
                         winningCard = playedCard;
                         winner = players[seat]->get_name();
+                        next_seat = seat;
                     }
                 }
 
@@ -171,8 +172,7 @@ class Game {
                 }
             }
             
-            int team = update_points(leader, t1_points, t2_points);
-            print_score();
+            int team = update_points(leader, t1_points, t2_points);          
             if (team == 1) {
                 return 1;
             } else if (team == 2) {
@@ -201,7 +201,8 @@ class Game {
                             cout << "euchred!" << endl;
                             t2_points += 2;
                     }
-                break;
+                    print_score();
+                    break;
                 case 2:
                     switch(t2_points) {
                         case 3: case 4:
@@ -219,7 +220,8 @@ class Game {
                             cout << "euchred!" << endl;
                             break;
                     }
-                break;
+                    print_score();
+                    break;
 
             }
 
@@ -252,7 +254,7 @@ class Game {
 
         void print_score() {
             cout << players[0]->get_name() << " and " << players[2]->get_name() << " have " << t1_points << " points" << endl; 
-            cout << players[1]->get_name() << " and " << players[3]->get_name() << " have " << t2_points << " points" << endl; 
+            cout << players[1]->get_name() << " and " << players[3]->get_name() << " have " << t2_points << " points" << endl << endl; 
         }
 
         int team(Player* player) {

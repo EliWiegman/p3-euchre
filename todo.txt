@@ -1,0 +1,10 @@
+player.cpp:
+	cards not being removed, (simple and human)
+	players can pick whatever suit they want whenever they want
+		(upcard suit only round 1, only other 3 suits otherwise)
+
+euchre.cpp:
+	cards not dealt out right (upcard is fine?)
+
+
+

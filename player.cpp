@@ -1,6 +1,7 @@
 // Project UID 1d9f47bfc76643019cfbf037641defe1
 #include "Player.h"
-#include "Pack.h"
+#include <cassert>
+#include <algorithm>
 
 using namespace std;
 
