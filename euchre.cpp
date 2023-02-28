@@ -85,10 +85,10 @@ class Game {
         void deal(Player* dealer) {
             int pos;
 
-            for (int batch = 0; batch < 8; batch++) {
+            for (int batch = 1; batch <= 8; batch++) {
                 pos = player_order(dealer, batch);
                 switch (batch) {
-                    case 0: case 2: case 5: case 7:
+                    case 1: case 3: case 6: case 8:
                         players[pos]->add_card(pack.deal_one());
                         players[pos]->add_card(pack.deal_one());
                         players[pos]->add_card(pack.deal_one());
@@ -107,7 +107,7 @@ class Game {
             int pos;
             for (int turn = 1; turn < 9; turn++) {
                 pos = player_order(dealer, turn);
-                if (players[pos]->make_trump(*upcard, ((pos % 4) == 0), (turn / 4), trump)) {
+                if (players[pos]->make_trump(*upcard, ((pos % 4) == 0), ((turn + 3) / 4), trump)) {
                     cout << players[pos]->get_name() << " orders up " << trump << endl;
                     dealer->add_and_discard(*upcard);
                     return players[pos];

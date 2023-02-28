@@ -57,7 +57,7 @@ class SimplePlayer : public Player {
                     return true;
                 }
 
-                /* order up if that would mean they have two or more 
+                /* order up if that would mean they have one or more 
                 cards that are face or ace cards of the trump suit */
                 for (int i = 0; i < MAX_HAND_SIZE; i++) {
                     if (hand.at(i).is_face_or_ace() 
@@ -93,39 +93,28 @@ class SimplePlayer : public Player {
 
         Card lead_card(Suit trump) 
         {
-            Card max = hand[0];
-            int counter = 1;
-            while ((max.get_suit() == trump) && (counter < hand.size()))
-            {
-                max = hand[counter];
-                counter++;
+            bool allTrump = true;
+            int max_index;
+            Card max;
+
+            for (int i = 0; i < hand.size(); i++) {
+                if (!hand[i].is_trump(trump) && Card_less(max, hand[i], trump)) {
+                    max = hand[i];
+                    max_index = i;
+                    allTrump = false;
+                }
             }
 
-            if (counter == hand.size() + 1)
-            {
-                for (int i = 1; i < hand.size(); i++)
-                {
-                    if (Card_less(max, hand[i], trump))
-                    {
+            if (allTrump) {
+                for (int i = 0; i < hand.size(); i++) {
+                    if (Card_less(max, hand[i], trump)) {
                         max = hand[i];
+                        max_index = i;
                     }
                 }
             }
-
-            else
-            {
-                for (int i = 1; i < hand.size(); i++)
-                {
-                    if (Card_less(max, hand[i], trump))
-                    {
-                        if (hand[i].get_suit() != trump)
-                        {
-                            max = hand[i];
-                        }
-                    }
-                }
-            }
-            // wrote this to get it to compile
+            
+            hand.erase(hand.begin() + max_index);
             return max;
         }
         

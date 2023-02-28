@@ -1,0 +1,27 @@
+A's hand:
+Nine of Diamonds
+Ace of Clubs
+Ten of Diamonds
+Jack of Hearts
+Queen of Hearts
+
+B's hand:
+Jack of Spades
+Nine of Spades
+Ten of Spades
+Ace of Hearts
+King of Hearts
+
+C's hand:
+King of Spades
+Jack of Clubs
+Nine of Clubs
+Ten of Clubs
+Queen of Spades
+
+D's hand:
+Ace of Spades
+King of Clubs
+Queen of Clubs
+Ten of Hearts
+Nine of Hearts
