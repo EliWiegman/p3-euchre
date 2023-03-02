@@ -123,6 +123,7 @@ class SimplePlayer : public Player {
             Suit suit;
             Card maxCard;
             Card minCard;
+            int index = 0;
             int suitCounter = 0;
             if (led_card.is_left_bower(trump))
             {
@@ -148,14 +149,16 @@ class SimplePlayer : public Player {
                         hand.erase(hand.begin() + i);
                     }
                 }
-                maxCard = hand[0];
+                maxCard = Card(TWO, led_card.get_suit(trump));
                 for (int i = 1; i < hand.size(); i++)
                 {
-                    if(Card_less(maxCard, hand[i], trump))
+                    if(Card_less(maxCard, hand[i], led_card, trump))
                     {
                         maxCard = hand[i];
+                        index = i;
                     }
                 }
+                hand.erase(hand.begin() + index);
                 return maxCard;
             }
             else
@@ -166,12 +169,12 @@ class SimplePlayer : public Player {
                     if(Card_less(hand[i], minCard, trump))
                     {
                         minCard = hand[i];
+                        index = i;
                     }
                 }
+                hand.erase(hand.begin() + index);
                 return minCard;
             }
-
-
         }
 
     private:
