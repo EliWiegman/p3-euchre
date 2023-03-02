@@ -127,7 +127,9 @@ std::istream & operator>>(std::istream &is, Suit &suit) {
   {
     if (rank == JACK)
     {
-      return Suit_next(trump);
+      if (suit == Suit_next(trump)) {
+        return trump;
+      }
     }
     return suit;
   }

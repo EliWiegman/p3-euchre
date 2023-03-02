@@ -104,12 +104,17 @@ class Game {
 
         // TODO round 2 can't choose same suit as upcard
         Player* make_trump(Player* dealer, Card* upcard) {
-            int pos;
+            int pos, round;
             for (int turn = 1; turn < 9; turn++) {
                 pos = player_order(dealer, turn);
-                if (players[pos]->make_trump(*upcard, ((pos % 4) == 0), ((turn + 3) / 4), trump)) {
+                round = ((turn + 3) / 4);
+                if (players[pos]->make_trump(*upcard, ((pos % 4) == 0), round, trump)) {
                     cout << players[pos]->get_name() << " orders up " << trump << endl;
-                    dealer->add_and_discard(*upcard);
+                    
+                    if (round == 1) {
+                        dealer->add_and_discard(*upcard);
+                    }
+    
                     return players[pos];
                 }
                 cout << players[pos]->get_name() << " passes" << endl;
