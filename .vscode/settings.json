@@ -8,6 +8,10 @@
     "files.associations": {
         "vector": "cpp",
         "iosfwd": "cpp",
+<<<<<<< Updated upstream
         "ostream": "cpp"
+=======
+        "iostream": "cpp"
+>>>>>>> Stashed changes
     }
 }

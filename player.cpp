@@ -120,44 +120,58 @@ class SimplePlayer : public Player {
         
         // Possibly may not check a case where the first card is the highest card on suit of led card
         Card play_card(const Card &led_card, Suit trump) {
+            Suit suit;
+            Card maxCard;
+            Card minCard;
             int suitCounter = 0;
-            int minIndex = 0;
-            int maxIndex = 0;
-            Card min = hand[0];
-            Card max = hand[0];
+            if (led_card.is_left_bower(trump))
+            {
+                suit = Suit_next(led_card.get_suit());
+            }
+            else
+            {
+                suit = led_card.get_suit();
+            }
             for (int i = 0; i < hand.size(); i++)
             {
-                if (hand[i].get_suit() == led_card.get_suit())
+                if (hand[i].get_suit() == suit)
                 {
                     suitCounter++;
                 }
             }
-            if (suitCounter == 0)
+            if (suitCounter > 0)
             {
-                for (int j = 1; j < hand.size();  j++)
+                for (int i = 0; i < hand.size(); i++)
                 {
-                    if (Card_less(hand[j], min, trump))
+                    if (hand[i].get_suit() == led_card.get_suit())
                     {
-                        min = hand[j];
-                        minIndex = j;
+                        hand.erase(hand.begin() + i);
                     }
                 }
-                hand.erase(hand.begin() + minIndex);
-                return min;
-            }
-            for (int j = 1; j < hand.size();  j++)
-            {
-                if (Card_less(max, hand[j], trump))
+                maxCard = hand[0];
+                for (int i = 1; i < hand.size(); i++)
                 {
-                    if (hand[j].get_suit() == led_card.get_suit())
+                    if(Card_less(maxCard, hand[i], trump))
                     {
-                        max = hand[j];
-                        maxIndex = j;
+                        maxCard = hand[i];
                     }
                 }
+                return maxCard;
             }
-            hand.erase(hand.begin() + maxIndex);
-            return max;
+            else
+            {
+                minCard = hand[0];
+                for (int i = 1; i < hand.size(); i++)
+                {
+                    if(Card_less(hand[i], minCard, trump))
+                    {
+                        minCard = hand[i];
+                    }
+                }
+                return minCard;
+            }
+
+
         }
 
     private:
