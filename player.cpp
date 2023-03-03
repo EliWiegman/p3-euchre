@@ -93,43 +93,41 @@ class SimplePlayer : public Player {
 
         Card lead_card(Suit trump) 
         {
-            Card maxCard = hand[0];
-            int counter = 0;
-            int index;
+            int nonTrumpCards = 0;
+            int index = 0;
 
             for (int i = 0; i < hand.size(); i++)
             {
-                if (hand[i].get_suit() != trump)
+                if (hand[i].get_suit(trump) != trump)
                 {
-                    counter++;
+                    nonTrumpCards++;
                 }
             }
-            if (counter > 0)
+
+            Card maxCard = hand[0];
+            if (nonTrumpCards > 0)
             {
-                for (int i = 0; i < hand.size(); i++)
+                for (int i = 1; i < hand.size(); i++)
                 {
-                    if(Card_less(maxCard, hand[i], trump) && hand[i].get_suit() != trump)
+                    if (Card_less(maxCard, hand[i], trump) && (hand[i].get_suit(trump) != trump))
                     {
                         maxCard = hand[i];
                         index = i;
                     }
                 }
-                hand.erase(hand.begin() + index);
-                return maxCard;
-            }
-            else
-            {
-                for (int i = 0; i < hand.size(); i++)
+            } else {
+                for (int i = 1; i < hand.size(); i++)
                 {
-                    if(Card_less(maxCard, hand[i], trump))
+                    if (Card_less(maxCard, hand[i], trump))
                     {
                         maxCard = hand[i];
                         index = i;
                     }
                 }
-                hand.erase(hand.begin() + index);
-                return maxCard;
             }
+
+            hand.erase(hand.begin() + index);
+            return maxCard;
         }
         
         // Possibly may not check a case where the first card is the highest card on suit of led card
