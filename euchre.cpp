@@ -102,7 +102,6 @@ class Game {
 
         };
 
-        // TODO round 2 can't choose same suit as upcard
         Player* make_trump(Player* dealer, Card* upcard) {
             int pos, round;
             for (int turn = 1; turn < 9; turn++) {
@@ -149,7 +148,9 @@ class Game {
                 // call lead card on the next player, assigning their choice to leadCard
                 first_seat = next_seat;
                 leadCard = players[next_seat]->lead_card(trump);
-                cout << leadCard << " led by " << players[next_seat]->get_name() << endl; 
+                cout << leadCard << " led by " << players[next_seat]->get_name() << endl;
+                winner = players[next_seat]->get_name();
+                winningCard = leadCard;
 
                 // for the 3 other people on the table
                 for (int player = 1; player < 4; player++) {
@@ -161,7 +162,7 @@ class Game {
                     cout << playedCard << " played by " << players[seat]->get_name() << endl; 
 
                     // if playedCard beats leadCard, set winningCard
-                    if (Card_less(winningCard, playedCard, trump)) {
+                    if (Card_less(winningCard, playedCard, leadCard, trump)) {
                         winningCard = playedCard;
                         winner = players[seat]->get_name();
                         next_seat = seat;
