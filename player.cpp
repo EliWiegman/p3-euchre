@@ -94,7 +94,6 @@ class SimplePlayer : public Player {
         Card lead_card(Suit trump) 
         {
             int nonTrumpCards = 0;
-            int index = 0;
 
             for (int i = 0; i < hand.size(); i++)
             {
@@ -104,18 +103,24 @@ class SimplePlayer : public Player {
                 }
             }
 
-            Card maxCard = hand[0];
+            Card maxCard;
+            int index = 0;
+            
             if (nonTrumpCards > 0)
             {
-                for (int i = 1; i < hand.size(); i++)
+                maxCard = Card(TWO, SPADES);
+                for (int i = 0; i < hand.size(); i++)
                 {
-                    if (Card_less(maxCard, hand[i], trump) && (hand[i].get_suit(trump) != trump))
-                    {
-                        maxCard = hand[i];
-                        index = i;
+                    if ((hand[i].get_suit(trump) != trump)) {
+                        if (Card_less(maxCard, hand[i], trump))
+                        {
+                            maxCard = hand[i];
+                            index = i;
+                        }
                     }
                 }
             } else {
+                maxCard = hand[0];
                 for (int i = 1; i < hand.size(); i++)
                 {
                     if (Card_less(maxCard, hand[i], trump))
