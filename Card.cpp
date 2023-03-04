@@ -197,7 +197,10 @@ std::istream & operator>>(std::istream &is, Card &card)
 
 bool operator<(const Card &lhs, const Card &rhs)
 {
-  if (lhs.get_rank() < rhs.get_rank())
+  if (lhs.get_rank() == rhs.get_rank()) {
+    return (lhs.get_suit() < rhs.get_suit());
+  }
+  else if (lhs.get_rank() < rhs.get_rank())
   {
     return true;
   }
@@ -206,7 +209,10 @@ bool operator<(const Card &lhs, const Card &rhs)
 
 bool operator<=(const Card &lhs, const Card &rhs)
 {
-  if (lhs.get_rank() <= rhs.get_rank())
+  if (lhs.get_rank() == rhs.get_rank()) {
+    return (lhs.get_suit() <= rhs.get_suit());
+  }
+  else if (lhs.get_rank() <= rhs.get_rank())
   {
     return true;
   }
@@ -215,7 +221,9 @@ bool operator<=(const Card &lhs, const Card &rhs)
 
 bool operator>(const Card &lhs, const Card &rhs)
 {
-    if (lhs.get_rank() > rhs.get_rank())
+  if (lhs.get_rank() == rhs.get_rank()) {
+    return (lhs.get_suit() > rhs.get_suit());
+  } else if (lhs.get_rank() > rhs.get_rank())
   {
     return true;
   }
@@ -224,7 +232,10 @@ bool operator>(const Card &lhs, const Card &rhs)
 
 bool operator>=(const Card &lhs, const Card &rhs)
 {
-    if (lhs.get_rank() >= rhs.get_rank())
+  if (lhs.get_rank() == rhs.get_rank()) {
+    return (lhs.get_suit() >= rhs.get_suit());
+  }
+  else if (lhs.get_rank() >= rhs.get_rank())
   {
     return true;
   }
@@ -233,7 +244,10 @@ bool operator>=(const Card &lhs, const Card &rhs)
 
 bool operator==(const Card &lhs, const Card &rhs)
 {
-    if (lhs.get_rank() == rhs.get_rank())
+  if (lhs.get_rank() == rhs.get_rank()) {
+    return (lhs.get_suit() == rhs.get_suit());
+  }
+  else if (lhs.get_rank() == rhs.get_rank())
   {
     return true;
   }
@@ -242,7 +256,10 @@ bool operator==(const Card &lhs, const Card &rhs)
 
 bool operator!=(const Card &lhs, const Card &rhs)
 {
-    if (lhs.get_rank() != rhs.get_rank())
+  if (lhs.get_rank() == rhs.get_rank()) {
+    return (lhs.get_suit() != rhs.get_suit());
+  }
+  else if (lhs.get_rank() != rhs.get_rank())
   {
     return true;
   }

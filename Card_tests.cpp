@@ -38,6 +38,12 @@ TEST(led_suit) {
     ASSERT_TRUE(Card_less(c1, c2, HEARTS));
 }
 
+TEST(min_cards) {
+    Card c1(NINE, SPADES);
+    Card c2(NINE, CLUBS);
+    ASSERT_TRUE(Card_less(c1, c2, DIAMONDS));
+}
+
 // stole all this from krishan
 // MUST CHANGE!!!!!!!
 

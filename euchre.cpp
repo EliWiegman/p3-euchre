@@ -173,12 +173,14 @@ class Game {
                 switch (next_seat) {
                     case 0: case 2:
                         t1_tricks++;
+                        break;
                     default:
                         t2_tricks++;
+                        break;
                 }
             }
             
-            int team = update_points(leader, t1_points, t2_points);          
+            int team = update_points(leader, t1_tricks, t2_tricks);          
             if (team == 1) {
                 return 1;
             } else if (team == 2) {
@@ -192,7 +194,7 @@ class Game {
         int update_points(Player* ordered_up, int t1, int t2) {
             switch (team(ordered_up)) {
                 case 1:
-                    switch(t1_points) {
+                    switch(t1) {
                         case 3: case 4:
                             hand_winners(1);
                             t1_points += 1;
@@ -210,7 +212,7 @@ class Game {
                     print_score();
                     break;
                 case 2:
-                    switch(t2_points) {
+                    switch(t2) {
                         case 3: case 4:
                             hand_winners(2);
                             t2_points += 1;
