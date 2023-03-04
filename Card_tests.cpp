@@ -44,6 +44,12 @@ TEST(min_cards) {
     ASSERT_TRUE(Card_less(c1, c2, DIAMONDS));
 }
 
+TEST(default_card) {
+    Card c1;
+    Card c2(KING, CLUBS);
+    ASSERT_TRUE(Card_less(c1, c2, SPADES));
+}
+
 // stole all this from krishan
 // MUST CHANGE!!!!!!!
 

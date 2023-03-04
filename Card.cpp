@@ -288,6 +288,12 @@ Suit Suit_next(Suit suit)
 
 bool Card_less(const Card &a, const Card &b, Suit trump)
 {
+  if (a.get_rank() < NINE) {
+    return true;
+  } else if (b.get_rank() < NINE) {
+    return false;
+  }
+
   // a is trump 
   if ((a.get_suit(trump) == trump) && (b.get_suit(trump) != trump))
   {

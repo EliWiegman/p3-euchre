@@ -108,7 +108,7 @@ class SimplePlayer : public Player {
             
             if (nonTrumpCards > 0)
             {
-                maxCard = Card(TWO, SPADES);
+                maxCard = Card();
                 for (int i = 0; i < hand.size(); i++)
                 {
                     if ((hand[i].get_suit(trump) != trump)) {
