@@ -12,18 +12,11 @@ void print_warning();
 class Game {
     public:
         Game(istream& is, bool shuffleDeck, int points, 
-        string p0_name, string p0_strat,
-        string p1_name, string p1_strat,
-        string p2_name, string p2_strat,
-        string p3_name, string p3_strat ) {
+        vector<Player*> selectedPlayers) {
             pack = Pack(is);
             shuffled = shuffleDeck;
             points_to_win = points;
-
-            players.push_back(Player_factory(p0_name, p0_strat));
-            players.push_back(Player_factory(p1_name, p1_strat));
-            players.push_back(Player_factory(p2_name, p2_strat));
-            players.push_back(Player_factory(p3_name, p3_strat));
+            players = selectedPlayers;
 
             t1_points = 0;
             t2_points = 0;
@@ -133,35 +126,46 @@ class Game {
             Player* leader = make_trump(dealer, &upcard);
             cout << endl;
             
-            Card leadCard, playedCard, winningCard;
-            string winner;
-            int seat, first_seat;
-            // start with person left to the dealer
-            int next_seat = player_order(dealer, 1);
-            
             int t1_tricks = 0;
             int t2_tricks = 0;
 
-            // for every trick
+            play_tricks(dealer, t1_tricks, t2_tricks);
+            
+            int team = update_points(leader, t1_tricks, t2_tricks);          
+            if (team == 1) {
+                return 1;
+            } else if (team == 2) {
+                return 2;
+            } else {
+                return 0;
+            }
+
+        };
+
+        void play_tricks(Player* dealer, int &t1_tricks, int &t2_tricks) {
+            Card leadCard, playedCard, winningCard;
+            
+            string winner;
+            int seat, first_seat;
+            int next_seat = player_order(dealer, 1);
+
             for (int trick = 0; trick < 5; trick++) {
                 
-                // call lead card on the next player, assigning their choice to leadCard
                 first_seat = next_seat;
                 leadCard = players[next_seat]->lead_card(trump);
-                cout << leadCard << " led by " << players[next_seat]->get_name() << endl;
+                cout << leadCard << " led by ";
+                cout << players[next_seat]->get_name() << endl;
                 winner = players[next_seat]->get_name();
                 winningCard = leadCard;
 
-                // for the 3 other people on the table
                 for (int player = 1; player < 4; player++) {
                     seat = player_order(players[first_seat], player); 
                     
-                    // call play card on a player based on the lead card and the trump suit
                     playedCard = players[seat]->
                                  play_card(leadCard, trump);
-                    cout << playedCard << " played by " << players[seat]->get_name() << endl; 
+                    cout << playedCard << " played by ";
+                    cout << players[seat]->get_name() << endl; 
 
-                    // if playedCard beats leadCard, set winningCard
                     if (Card_less(winningCard, playedCard, leadCard, trump)) {
                         winningCard = playedCard;
                         winner = players[seat]->get_name();
@@ -179,17 +183,7 @@ class Game {
                         break;
                 }
             }
-            
-            int team = update_points(leader, t1_tricks, t2_tricks);          
-            if (team == 1) {
-                return 1;
-            } else if (team == 2) {
-                return 2;
-            } else {
-                return 0;
-            }
-
-        };
+        }
 
         int update_points(Player* ordered_up, int t1, int t2) {
             switch (team(ordered_up)) {
@@ -230,7 +224,6 @@ class Game {
                     }
                     print_score();
                     break;
-
             }
 
             if (t1_points >= points_to_win) {
@@ -246,23 +239,32 @@ class Game {
 
         void print_winners(int team) {
             if (team == 1) {
-                cout << players[0]->get_name() << " and " << players[2]->get_name() << " win!" << endl;
+                cout << players[0]->get_name() << " and " 
+                << players[2]->get_name() << " win!" << endl;
             } else {
-                cout << players[1]->get_name() << " and " << players[3]->get_name() << " win!" << endl;
+                cout << players[1]->get_name() << " and " 
+                << players[3]->get_name() << " win!" << endl;
             }
         }
 
         void hand_winners(int team) {
             if (team == 1) {
-                cout << players[0]->get_name() << " and " << players[2]->get_name() << " win the hand" << endl;
+                cout << players[0]->get_name() << " and " 
+                << players[2]->get_name() << " win the hand" << endl;
             } else {
-                cout << players[1]->get_name() << " and " << players[3]->get_name() << " win the hand" << endl;
+                cout << players[1]->get_name() << " and " 
+                << players[3]->get_name() << " win the hand" << endl;
             }
         }
 
         void print_score() {
-            cout << players[0]->get_name() << " and " << players[2]->get_name() << " have " << t1_points << " points" << endl; 
-            cout << players[1]->get_name() << " and " << players[3]->get_name() << " have " << t2_points << " points" << endl << endl; 
+            cout << players[0]->get_name() << " and " 
+            << players[2]->get_name() << " have " 
+            << t1_points << " points" << endl; 
+
+            cout << players[1]->get_name() << " and " 
+            << players[3]->get_name() << " have " 
+            << t2_points << " points" << endl << endl; 
         }
 
         int team(Player* player) {
@@ -341,11 +343,13 @@ int main(int argc, char* argv[]) {
         return -1;
     };
 
-    Game game = Game(input, shuffle, points, 
-                        p0_name, p0_strat, 
-                        p1_name, p1_strat, 
-                        p2_name, p2_strat,
-                        p3_name, p3_strat);
+    vector<Player*> players;
+    players.push_back(Player_factory(p0_name, p0_strat));
+    players.push_back(Player_factory(p1_name, p1_strat));
+    players.push_back(Player_factory(p2_name, p2_strat));
+    players.push_back(Player_factory(p3_name, p3_strat));
+
+    Game game = Game(input, shuffle, points, players);
     game.play();
     return 0;
 }

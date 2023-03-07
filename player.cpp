@@ -112,11 +112,11 @@ class SimplePlayer : public Player {
                 for (int i = 0; i < hand.size(); i++)
                 {
                     if ((hand[i].get_suit(trump) != trump)) {
-                        if (Card_less(maxCard, hand[i], trump))
-                        {
-                            maxCard = hand[i];
-                            index = i;
-                        }
+                    if (Card_less(maxCard, hand[i], trump))
+                    {
+                        maxCard = hand[i];
+                        index = i;
+                    }
                     }
                 }
             } else {
