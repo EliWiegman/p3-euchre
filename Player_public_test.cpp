@@ -17,7 +17,7 @@ using namespace std;
 // THESE TEST CASES WILL ONLY TELL YOU IF YOUR CODE COMPILES.
 // YOU NEED TO WRITE YOUR OWN COMPREHENSIVE TEST CASES IN Player_tests.cpp
 
-/*TEST(test_player_insertion) {
+TEST(test_player_insertion) {
   // Create a Human player
   Player * human = Player_factory("NotRobot", "Human");
 
@@ -39,7 +39,7 @@ using namespace std;
   // Clean up players that were created using Player_factory()
   delete human;
   delete alice;
-} */
+}
 
 TEST(test_player_get_name) {
   // Create a player and verify that get_name() returns the player's name

@@ -6,7 +6,8 @@
 using namespace std;
 
 std::ostream & operator<<(std::ostream &os, const Player &p) {
-  assert(false);
+  os << p.get_name();
+  return os;
 }
 
 class SimplePlayer : public Player {
@@ -99,7 +100,7 @@ class SimplePlayer : public Player {
             {
                 if (hand[i].get_suit(trump) != trump)
                 {
-                    nonTrumpCards++;
+                nonTrumpCards++;
                 }
             }
 
@@ -157,7 +158,8 @@ class SimplePlayer : public Player {
                 maxCard = Card(TWO, led_card.get_suit(trump));
                 for (int i = 0; i < hand.size(); i++)
                 {
-                    if (Card_less(maxCard, hand[i], led_card, trump) && hand[i].get_suit(trump) == suit)
+                    if (Card_less(maxCard, hand[i], led_card, trump) 
+                        && hand[i].get_suit(trump) == suit)
                     {
                         maxCard = hand[i];
                         index = i;
