@@ -162,6 +162,38 @@ TEST(get_suit_and_rank)
     ASSERT_EQUAL(ACE, c3.get_rank());
 }
 
-TEST(card_input) {
+TEST(face_or_ace) {
+    Card c1(JACK, DIAMONDS);
+    Card c2(QUEEN, DIAMONDS);
+    Card c3(KING, DIAMONDS);
+    Card c4(ACE, DIAMONDS);
+    Card c5(NINE, DIAMONDS);
+    Card c6(TEN, DIAMONDS);
 
+    ASSERT_TRUE(c1.is_face_or_ace());
+    ASSERT_TRUE(c2.is_face_or_ace());
+    ASSERT_TRUE(c3.is_face_or_ace());
+    ASSERT_TRUE(c4.is_face_or_ace());
+    ASSERT_FALSE(c5.is_face_or_ace());
+    ASSERT_FALSE(c6.is_face_or_ace());
+}
+
+TEST(test_right_bower) {
+    Card c1(JACK, DIAMONDS);
+    ASSERT_TRUE(c1.get_suit() == DIAMONDS);
+    ASSERT_TRUE(c1.get_suit(DIAMONDS) == DIAMONDS);
+    ASSERT_TRUE(c1.is_face_or_ace());
+    ASSERT_TRUE(c1.is_right_bower(DIAMONDS));
+    ASSERT_FALSE(c1.is_left_bower(DIAMONDS));
+    ASSERT_TRUE(c1.is_trump(DIAMONDS));
+}
+
+TEST(test_left_bower) {
+    Card c1(JACK, HEARTS);
+    ASSERT_TRUE(c1.get_suit() == HEARTS);
+    ASSERT_TRUE(c1.get_suit(DIAMONDS) == DIAMONDS);
+    ASSERT_TRUE(c1.is_face_or_ace());
+    ASSERT_FALSE(c1.is_right_bower(DIAMONDS));
+    ASSERT_TRUE(c1.is_left_bower(DIAMONDS));
+    ASSERT_TRUE(c1.is_trump(DIAMONDS));
 }
