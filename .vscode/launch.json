@@ -100,5 +100,17 @@
             "externalConsole": false,
             "MIMode": "lldb",
         },
+        {
+            "name": "(lldb) Euchre Test 50",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/euchre.exe",
+            "args": ["pack.in", "noshuffle", "3", "Ivan", "Human", "Judea", "Human", "Kunle", "Human", "Liskov", "Human", "<", "euchre_test50.in", ">"],
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "lldb",
+        },
     ]
 }

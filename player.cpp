@@ -231,7 +231,7 @@ class HumanPlayer : public Player {
                 }
                 else
                 {
-                    order_up_suit = CLUBS;
+                    order_up_suit = SPADES;
                     return true;                    
                 }
             } 
@@ -243,34 +243,45 @@ class HumanPlayer : public Player {
 
         void add_and_discard(const Card &upcard) {
             string choice;
-            hand.push_back(upcard);
             print_hand();
+            hand.push_back(upcard);
             cout << "Discard upcard: [-1]\n";
             cout << "Human player " << name << ", please select a card to discard:\n";
+            cin >> choice;
             if (choice == "-1")
             {
                 hand.erase(hand.begin() + hand.size() - 1);
+                std::sort(hand.begin(), hand.end());
             }
             else
             {
                 hand.erase(hand.begin() + stoi(choice));
+                std::sort(hand.begin(), hand.end());
             }
         }
 
         Card lead_card(Suit trump) {
+            Card i;
             print_hand();
             cout << "Human player " << name << ", please select a card:\n";
             string choice;
             cin >> choice;
-            return hand[stoi(choice)];
+            i = hand[stoi(choice)];
+            hand.erase(hand.begin() + stoi(choice));
+            std::sort(hand.begin(), hand.end());
+            return i;
         }
 
         Card play_card(const Card &led_card, Suit trump) {
+            Card i;
             print_hand();
             cout << "Human player " << name << ", please select a card:\n";
             string choice;
             cin >> choice;
-            return hand[stoi(choice)];
+            i = hand[stoi(choice)];
+            hand.erase(hand.begin() + stoi(choice));
+            std::sort(hand.begin(), hand.end());
+            return i;
         }
     private:
         string name;
