@@ -12,12 +12,30 @@ TEST(test_card_ctor) {
     Card c(ACE, HEARTS);
     ASSERT_EQUAL(ACE, c.get_rank());
     ASSERT_EQUAL(HEARTS, c.get_suit());
+
+    Card b(JACK, SPADES);
+    ASSERT_EQUAL(JACK, b.get_rank());
+    ASSERT_EQUAL(SPADES,b.get_suit());
+
+    Card a(NINE, CLUBS);
+    ASSERT_EQUAL(NINE, a.get_rank());
+    ASSERT_EQUAL(CLUBS, a.get_suit());
 }
 
 TEST(left_and_right_bowers) {
     Card left(JACK, DIAMONDS);
     Card right(JACK, HEARTS);
     ASSERT_TRUE(Card_less(left, right, HEARTS));
+
+    Card left2(ACE, HEARTS);
+    Card right2(JACK, HEARTS);
+    ASSERT_TRUE(Card_less(left2, right2, HEARTS));
+
+    Card left3(KING, SPADES);
+    Card right3(JACK, DIAMONDS);
+    ASSERT_TRUE(Card_less(left3, right3, HEARTS));
+
+    
 }
 
 TEST(both_trump) {
@@ -48,4 +66,17 @@ TEST(default_card) {
     Card c1(TWO, SPADES);
     Card c2(KING, CLUBS);
     ASSERT_TRUE(Card_less(c1, c2, SPADES));
+}
+
+TEST(get_suit_and_rank)
+{
+    Card c1(TWO, SPADES);
+    Card c2(KING, CLUBS);
+    Card c3(ACE, HEARTS);
+    ASSERT_EQUAL(SPADES, c1.get_suit());
+    ASSERT_EQUAL(CLUBS, c2.get_suit());
+    ASSERT_EQUAL(HEARTS, c3.get_suit());
+    ASSERT_EQUAL(TWO, c1.get_rank());
+    ASSERT_EQUAL(KING, c2.get_rank());
+    ASSERT_EQUAL(ACE, c3.get_rank());
 }
