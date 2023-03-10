@@ -41,14 +41,5 @@ TEST(test_simple_player_play_card) {
   delete bob;
 }
 
-TEST(test_simple_player_add_card)
-{
-  Player * bob = Player_factory("Bob", "Simple");
-  bob->add_card(Card(NINE, SPADES));
-  vector<Card> hand;
-  hand.push_back(Card(NINE, SPADES));
-}
-
-// Add more tests here
 
 TEST_MAIN()

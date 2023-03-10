@@ -337,43 +337,46 @@ bool Card_less(const Card &a, const Card &b, const Card &led_card, Suit trump)
     return false;
   }
   
-  if (a.get_rank() < NINE) {
+  if (b.get_rank() < NINE) {
+    return false;
+  } else if (a.get_rank() < NINE) {
     return true;
-  } else if (b.get_rank() < NINE) {
+  }
+
+  if ((b.get_suit(trump) != trump) && (a.get_suit(trump) == trump))
+  {
     return false;
   }
 
-  // a is trump 
-  if ((a.get_suit(trump) == trump) && (b.get_suit(trump) != trump))
-  {
-    return false;
-  }
-  // b is trump 
-  else if ((a.get_suit(trump) != trump) && (b.get_suit(trump) == trump))
+  else if ((b.get_suit(trump) == trump) && (a.get_suit(trump) != trump))
   {
     return true;
   }
-  // neither are trump
+
   else if ((a.get_suit(trump) != trump) && (b.get_suit(trump) != trump))
   {
-    if ((a.get_suit(trump) != led) && (b.get_suit(trump) == led)) {
+    if ((b.get_suit(trump) == led) && (a.get_suit(trump) != led)) {
       return true;
     } else if ((a.get_suit(trump) == led) && (b.get_suit(trump) != led)) {
       return false;
     } 
     return (a < b);
   }
-  // both are trump
+
   else {
     if (a.is_right_bower(trump)) {
       return false;
-    } else if (b.is_right_bower(trump)) {
+    } 
+    else if (b.is_right_bower(trump)) {
       return true;
-    } else if (a.is_left_bower(trump)) {
+    } 
+    else if (b.is_left_bower(trump)) {
+      return true;
+    }
+    else if (a.is_left_bower(trump)) {
       return false;
-    } else if (b.is_left_bower(trump)) {
-      return true;
-    } else {
+    }  
+    else {
       return (a < b);
     }
   }

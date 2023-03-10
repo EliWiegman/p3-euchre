@@ -105,35 +105,44 @@ class SimplePlayer : public Player {
             }
 
             Card maxCard;
-            int index = 0;
+            Card maxCardTwo;
+            int indexOne = 0;
+            int indexTwo = 0;
             
-            if (nonTrumpCards > 0)
+            maxCard = Card();
+            for (int i = 0; i < hand.size(); i++)
             {
-                maxCard = Card();
-                for (int i = 0; i < hand.size(); i++)
+                if ((hand[i].get_suit(trump) != trump)) {
+                if (Card_less(maxCard, hand[i], trump))
                 {
-                    if ((hand[i].get_suit(trump) != trump)) {
-                    if (Card_less(maxCard, hand[i], trump))
-                    {
-                        maxCard = hand[i];
-                        index = i;
-                    }
-                    }
+                    maxCard = hand[i];
+                    indexOne = i;
                 }
-            } else {
-                maxCard = hand[0];
-                for (int i = 1; i < hand.size(); i++)
-                {
-                    if (Card_less(maxCard, hand[i], trump))
-                    {
-                        maxCard = hand[i];
-                        index = i;
-                    }
                 }
             }
 
-            hand.erase(hand.begin() + index);
-            return maxCard;
+            maxCardTwo = hand[0];
+            for (int i = 1; i < hand.size(); i++)
+            {
+                if (Card_less(maxCardTwo, hand[i], trump))
+                {
+                    maxCardTwo = hand[i];
+                    indexTwo = i;
+                }
+            }
+
+            if (nonTrumpCards > 0)
+            {
+                hand.erase(hand.begin() + indexOne);
+                return maxCard;
+            } 
+            else 
+            {
+                hand.erase(hand.begin() + indexTwo);
+                return maxCardTwo; 
+            }
+
+
         }
         
         Card play_card(const Card &led_card, Suit trump) {
